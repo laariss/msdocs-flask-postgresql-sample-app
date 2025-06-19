@@ -6,3 +6,6 @@ DATABASE_URI = 'postgresql+psycopg2://{dbuser}:{dbpass}@{dbhost}/{dbname}'.forma
      dbhost=os.getenv('AZURE_POSTGRESQL_HOST'),
      dbname=os.getenv('AZURE_POSTGRESQL_NAME')
 )
+
+from flask_sqlalchemy import SQLAlchemy
+db = SQLAlchemy()

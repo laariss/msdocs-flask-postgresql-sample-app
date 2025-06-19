@@ -1,32 +1,13 @@
-from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
-from sqlalchemy.orm import validates
+from sqlalchemy import Column, Integer, String, DateTime
+from app import db  # Importa db desde app.py
 
-from app import db
-
-
-class Restaurant(db.Model):
-    __tablename__ = 'restaurant'
+class PixelCount(db.Model):
+    __tablename__ = 'pixel_counts'
     id = Column(Integer, primary_key=True)
-    name = Column(String(50))
-    street_address = Column(String(50))
-    description = Column(String(250))
+    usuario = Column(String(128), nullable=False)
+    timestamp = Column(DateTime)
+    fichero = Column(String(256), nullable=False)
+    pixeles = Column(db.JSON)
 
-    def __str__(self):
-        return self.name
-
-class Review(db.Model):
-    __tablename__ = 'review'
-    id = Column(Integer, primary_key=True)
-    restaurant = Column(Integer, ForeignKey('restaurant.id', ondelete="CASCADE"))
-    user_name = Column(String(30))
-    rating = Column(Integer)
-    review_text = Column(String(500))
-    review_date = Column(DateTime)
-
-    @validates('rating')
-    def validate_rating(self, key, value):
-        assert value is None or (1 <= value <= 5)
-        return value
-
-    def __str__(self):
-        return f"{self.user_name}: {self.review_date:%x}"
+    def __repr__(self):
+        return f"<PixelCount usuario={self.usuario}, fichero={self.fichero}, timestamp={self.timestamp}, pixeles={self.pixeles}>"

@@ -1,51 +1,38 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Visor de Imágenes Procesadas</title>
-  <style>
-    table {
-      border-collapse: collapse;
-      width: 100%;
-    }
-    th, td {
-      padding: 10px;
-      border: 1px solid #ddd;
-    }
-    th {
-      background-color: #f4f4f4;
-    }
-  </style>
-</head>
-<body>
-  <div style="padding: 20px;">
-    <h1>Visor de Imágenes Procesadas</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>Usuario</th>
-          <th>Nombre de archivo</th>
-          <th>Total píxeles</th>
-          <th>Transformación</th>
-          <th>Rojos</th>
-          <th>Verdes</th>
-          <th>Azules</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for img in imagenes %}
-          <tr>
-            <td>{{ img.user_name }}</td>
-            <td>{{ img.nombre_archivo }}</td>
-            <td>{{ img.n_pixeles_total }}</td>
-            <td>{{ img.tipo_transformacion }}</td>
-            <td>{{ img.n_pixeles_rojos }}</td>
-            <td>{{ img.n_pixeles_verdes }}</td>
-            <td>{{ img.n_pixeles_azules }}</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}Registros de imágenes{% endblock %}
+
+{% block content %}
+<h1>Registros de imágenes</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Usuario</th>
+      <th>Fecha</th>
+      <th>Fichero</th>
+      <th>Rojo</th>
+      <th>Verde</th>
+      <th>Azul</th>
+      <th>Transformación</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for registro in pixel_counts %}
+    <tr>
+      <td>{{ registro.id }}</td>
+      <td>{{ registro.usuario }}</td>
+      <td>{{ registro.timestamp }}</td>
+      <td>{{ registro.fichero }}</td>
+      <td>{{ registro.pixeles['rojo'] }}</td>
+      <td>{{ registro.pixeles['verde'] }}</td>
+      <td>{{ registro.pixeles['azul'] }}</td>
+      <td>
+        <form method="post" action="{{ url_for('eliminar_pixelcount', id=registro.id) }}">
+          <button class="btn btn-danger btn-sm" type="submit">Transformación</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
