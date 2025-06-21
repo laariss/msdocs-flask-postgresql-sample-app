@@ -58,12 +58,6 @@ def add_pixel():
     return {"id": nuevo.id}, 201
 
 @app.route("/pixelcounts", methods=["GET"])
-def index():
-    try:
-        pixel_counts = PixelCount.query.order_by(PixelCount.timestamp.desc()).all()
-    except Exception as e:
-        return f"<h1>❌ Error en index:</h1><pre>{str(e)}</pre>", 500
-    return render_template("index.html", pixel_counts=pixel_counts)
 def get_pixelcounts():
     registros = PixelCount.query.order_by(PixelCount.timestamp.desc()).all()
     return {
