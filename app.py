@@ -33,18 +33,8 @@ def index():
     pixel_counts = PixelCount.query.order_by(PixelCount.timestamp.desc()).all()
     return render_template("index.html", pixel_counts=pixel_counts)
 
-@app.route('/add_pixel', methods=['POST'])
-def add_pixel():
-    data = request.json
-    print(data)
-    return jsonify({"status": "ok"}), 200
 
-if __name__ == '__main__':
-    import os
-    port = int(os.environ.get('PORT', 5000))  # Usa el puerto que Azure asigna
-    app.run(host='0.0.0.0', port=port)
-
-"""@app.route("/add_pixel", methods=["POST"])
+@app.route("/add_pixel", methods=["POST"])
 @csrf.exempt
 def add_pixel():
     if not request.is_json:
@@ -68,7 +58,7 @@ def add_pixel():
     db.session.add(nuevo)
     db.session.commit()
     return {"id": nuevo.id}, 201
-"""
+
 @app.route("/pixelcounts", methods=["GET"])
 def get_pixelcounts():
     registros = PixelCount.query.order_by(PixelCount.timestamp.desc()).all()
